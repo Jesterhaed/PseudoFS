@@ -89,6 +89,7 @@ int nacti_soubor() {
 void uloz_ntfs(char* ntfs) {
 	printf("%s ulozena.\n", ntfs);
 }
+
 void uvolni_ntfs() {
 
 }

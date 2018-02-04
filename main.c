@@ -98,5 +98,6 @@ int main(int argc, char** argv) {
 	uloz_ntfs(argv[1]);
 	uvolni_ntfs();
 
+
 	return 0;
 }

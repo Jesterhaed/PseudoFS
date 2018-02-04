@@ -57,4 +57,5 @@ int nahraj_z_ntfs();
 int nacti_soubor();
 void uloz_ntfs(char* ntfs);
 void uvolni_ntfs();
+
 #endif /* NTFS_H_ */
