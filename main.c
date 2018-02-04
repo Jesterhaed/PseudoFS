@@ -22,13 +22,18 @@ void help() {
 	printf("	info a1/s1 	Vypise informace o souboru/adresari s1/a1.\n");
 	printf("	incp s1 s2 	Nahraje soubor s1 z pevneho disku do umisteni s2 v pseudo NTFS.\n");
 	printf("	outcp s1 s2	Nahraje soubour s1 z pseudoNTFS do umisteni na pevnem disku.\n");
-	printf("	load s1 	Nacte soubor z pevneho disku, ve kterem budou jednotlive prikazy a zacne je sekvence vykonavat.\n");
+	printf("	load s1 	Nacte soubor z pevneho disku, ve kterem budou jednotlive prikazy a zacne je sekvencnae vykonavat.\n");
 	printf("	q			Ukonceni a ulozeni NTFS.\n");
 	return;
 }
 
 int main(int argc, char** argv) {
 	char vstup[6];
+
+	if (argc == 3) {
+		testovaci_ntfs(argv[2]);
+		return 1;
+	}
 
 	if (argc != 2) {
 		printf("Jako argument zadej souborovy system.");

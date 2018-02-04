@@ -6,6 +6,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include "ntfs.h"
 
 char adresa1[255];
 char adresa2[255];
@@ -18,6 +19,8 @@ int nacti_ntfs(char* ntfs) {
 int kopiruj_soubor() {
 	scanf("%255s",adresa1);
 	scanf("%255s",adresa2);
+	printf("Adr1: %s.\n", adresa1);
+	printf("Adr2: %s.\n", adresa2);
 	return 1;
 }
 
@@ -88,4 +91,9 @@ void uloz_ntfs(char* ntfs) {
 }
 void uvolni_ntfs() {
 
+}
+
+int testovaci_ntfs(char* ntfs){
+
+	return 1;
 }
