@@ -8,8 +8,11 @@
 #ifndef NTFS_H_
 #define NTFS_H_
 
-#define UID_ITEM_FREE 0
+#define UID_ITEM_FREE -1
 #define MFT_FRAGMENTS_COUNT 32
+
+#define CLUSTER_COUNT 200
+#define CLUSTER_SIZE 100
 
 typedef struct boot_record {
     char signature[9];              //login autora FS
@@ -57,5 +60,6 @@ int nahraj_z_ntfs();
 int nacti_soubor();
 void uloz_ntfs(char* ntfs);
 void uvolni_ntfs();
+int testovaci_ntfs(char* ntfs);
 
 #endif /* NTFS_H_ */

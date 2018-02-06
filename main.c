@@ -31,7 +31,9 @@ int main(int argc, char** argv) {
 	char vstup[6];
 
 	if (argc == 3) {
+		printf("Vytvori se souborovy system: %s.\n", argv[2]);
 		testovaci_ntfs(argv[2]);
+		printf("Souborovy system %s vytvoren.\n", argv[2]);
 		return 1;
 	}
 
