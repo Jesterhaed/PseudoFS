@@ -1,65 +1,62 @@
-/*
- * ntfs.h
- *
- *  Created on: 4. 2. 2018
- *      Author: deserteagle
- */
+#ifndef NTFS_H
+#define NTFS_H
 
-#ifndef NTFS_H_
-#define NTFS_H_
-
+#define MFT_FRAGMENTS_COUNT 10
 #define UID_ITEM_FREE -1
-#define MFT_FRAGMENTS_COUNT 32
-
 #define CLUSTER_COUNT 200
 #define CLUSTER_SIZE 100
 
-typedef struct boot_record {
-    char signature[9];              //login autora FS
+// obsahuje informace o NTFS
+typedef struct Boot_record {
     char volume_descriptor[251];    //popis vygenerovaného FS
-    int disk_size;              //celkova velikost VFS
-    int cluster_size;           //velikost clusteru
-    int cluster_count;          //pocet clusteru
-    int mft_start_address;      //adresa pocatku mft
-    int bitmap_start_address;   //adresa pocatku bitmapy
-    int data_start_address;     //adresa pocatku datovych bloku
-    int mft_max_fragment_count; //maximalni pocet fragmentu v jednom zaznamu v mft (pozor, ne souboru)
+    int32_t disk_size;              //celkova velikost VFS
+    int32_t cluster_size;           //velikost clusteru
+    int32_t cluster_count;          //pocet clusteru
+    int32_t mft_start_address;      //adresa pocatku mft
+    int32_t bitmap_start_address;   //adresa pocatku bitmapy
+    int32_t data_start_address;     //adresa pocatku datovych bloku
+    int32_t mft_max_fragment_count; //maximalni pocet fragmentu v jednom zaznamu v mft (pozor, ne souboru)
                                     // stejne jako   MFT_FRAGMENTS_COUNT
+    								// pokud by bylo 1, tak jeden soubor muze mit max 1 mft_item
 }boot_record;
 
-typedef struct mft_fragment {
-	int fragment_start_address;     //start adresa
-	int fragment_count;             //pocet clusteru ve fragmentu
+typedef struct Mft_fragment {
+    int32_t fragment_start_address;     //start adresa
+    int32_t fragment_count;             //pocet clusteru ve fragmentu
 }mft_fragment;
 
-typedef struct mft_item {
-	int uid;                                        //UID polozky, pokud UID = UID_ITEM_FREE, je polozka volna
-	int isDirectory;                                   //soubor, nebo adresar
-    int item_order;                                  //poradi v MFT pri vice souborech, jinak 1
-    int item_order_total;                            //celkovy pocet polozek v MFT
+// jeden soubor muze byt slozen i z vice mft_itemu, ty ale pak maji stejna uid (lisi se item_orderem)
+typedef struct Mft_item {
+    int uid;                     	                   //UID polozky, pokud UID = UID_ITEM_FREE, je polozka volna
+    int isDirectory;                                    //soubor, nebo adresar (1=adresar, 0=soubor)
+    int8_t item_order;                                  //poradi v MFT pri vice souborech, jinak 1
+    int8_t item_order_total;                            //celkovy pocet polozek v MFT
     char item_name[12];                                 //8+3 + /0 C/C++ ukoncovaci string znak
-    int item_size;                                  //velikost souboru v bytech
-    mft_fragment fragments[MFT_FRAGMENTS_COUNT]; //fragmenty souboru
+    int32_t item_size;                                  //velikost souboru v bytech
+    mft_fragment fragments[MFT_FRAGMENTS_COUNT]; 		//fragmenty souboru
 }mft_item;
 
+// itemy jsou ulozene ve spojovem seznamu, aby se jeden soubor mohl skladat z vice itemu
+typedef struct Mft_list {
+    mft_item item; // k nested prvkum pristupuji pres tecky
+    struct Mft_list *next;
+} mft_list;
 
-void kopiruj();
-int nacti_ntfs(char* ntfs);
-int kopiruj_soubor();
-int presun_soubor();
-int smaz_soubor();
-int vytvor_adr();
-int smaz_adr();
-int vypis_adr();
-int vypis_soubor();
-int zmen_adr();
-int vypis_cestu();
-int vypis_info();
-int nahraj_do_ntfs();
-int nahraj_z_ntfs();
-int nacti_soubor();
-void uloz_ntfs(char* ntfs);
-void uvolni_ntfs();
-int testovaci_ntfs(char* ntfs);
+mft_list *mft_seznam[CLUSTER_COUNT];
 
-#endif /* NTFS_H_ */
+void copy_file();
+void move_file();
+void remove_file();
+void make_dir();
+void remove_dir();
+void list_dir();
+void concatenate();
+void change_dir();
+void print_dir();
+void read_info();
+void in_copy();
+void out_copy();
+void defragmentation();
+void check_consistency();
+
+#endif
