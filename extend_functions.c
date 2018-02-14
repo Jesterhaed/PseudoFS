@@ -52,12 +52,14 @@ char* get_cluster_content(int32_t adresa) {
     FILE *fr;
     char *ret;
 
-    ret = (char*) malloc(CLUSTER_SIZE);
+    ret = (char*) malloc(CLUSTER_SIZE +1);
 
     fr = fopen(ntfs_file, "rb");
     if (fr != NULL) {
         fseek(fr, adresa, SEEK_SET);
         fread(ret, sizeof(char), CLUSTER_SIZE, fr);
+
+        ret[CLUSTER_SIZE] = '\0';
 
         fclose(fr);
     }
@@ -92,7 +94,7 @@ int set_cluster_content(int32_t adresa, char *obsah) {
 			memset(buffer, 0, pocet_nul);
 			fwrite(obsah, 1, velikost_obsahu, f);
 			fwrite(buffer, 1, pocet_nul, f);
-
+			free(buffer);
 		}
 		else {
 			fwrite(obsah, 1, CLUSTER_SIZE, f);
