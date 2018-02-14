@@ -324,7 +324,7 @@ char* read_file_from_pc(char *pc_soubor){
 
         // precte soubor do promenne
         fseek(fr, 0, SEEK_SET);
-        fread(ret, 1, size, fr);
+        fread(ret, 1, size + 1, fr);
         ret[size] = '\0';
 
         fclose(fr);

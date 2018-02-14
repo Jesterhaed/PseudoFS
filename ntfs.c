@@ -476,6 +476,9 @@ void print_dir(){
     char link[20], full_link[200], pom[200];
     int link_int;
 
+    memset(pom, 0, 200);
+    memset(full_link, 0, 200);
+
     if (pwd == 0) {
         printf("/\n");
     }
@@ -678,7 +681,7 @@ void defragmentation(){
                 char *cely_soubor = get_file_content(i);
                 strcpy(ntfs_file, old);
 
-               clusteru = ceil((double) strlen(cely_soubor) / CLUSTER_SIZE);
+//               clusteru = ceil((double) strlen(cely_soubor) / CLUSTER_SIZE);
 
                 // zapis do bitmapy
                 for (j = zpracovany; j < zpracovany + clusteru; j++) {

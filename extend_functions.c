@@ -70,13 +70,33 @@ char* get_cluster_content(int32_t adresa) {
     @param obsah Novy obsah bloku
     @return Zaporne hodnoty chybne
 */
+
 int set_cluster_content(int32_t adresa, char *obsah) {
     FILE *f;
 
+	char *buffer;
+
     f = fopen(ntfs_file, "r+b");
+	int velikost_obsahu = strlen(obsah);
+
     if (f != NULL) {
-        fseek(f, adresa, SEEK_SET);
-        fwrite(obsah, 1, CLUSTER_SIZE, f);
+
+		fseek(f, adresa, SEEK_SET);
+
+		if (velikost_obsahu < CLUSTER_SIZE) {
+
+			int pocet_nul = CLUSTER_SIZE - velikost_obsahu;
+
+			buffer = malloc(pocet_nul);
+
+			memset(buffer, 0, pocet_nul);
+			fwrite(obsah, 1, velikost_obsahu, f);
+			fwrite(buffer, 1, pocet_nul, f);
+
+		}
+		else {
+			fwrite(obsah, 1, CLUSTER_SIZE, f);
+		}
 
         fclose(f);
         return 1;
