@@ -168,6 +168,7 @@ int make_new_file(int pwd, char *name){
     char pomocnik2[5], pom[5];
 
     if (is_name_unique(name, pwd) != 1){
+    	printf("EXIST\n");
         return -1;
     }
 
@@ -239,12 +240,11 @@ int make_new_file(int pwd, char *name){
 
                     fclose(fw);
                 }
-
                 break;
             }
         }
     }
-
+    printf("OK\n");
     return volne_uid;
 }
 

@@ -335,12 +335,12 @@ void make_dir(){
         // z bitmapy prvni volny cluster a vypocet adresu, fragment_count 1
         // do prvniho fragmentu polozky mft_seznam[ret]->item - UID noveho adresare
         make_new_file(ret, nazev);
+
     }
 
 
     free((void *) jen_cesta);
 
-    printf("OK\n");
 }
 
 
