@@ -331,11 +331,8 @@ void make_dir(){
         return;
     }
     else {
-        // tvorba slozky
-        // z bitmapy prvni volny cluster a vypocet adresu, fragment_count 1
-        // do prvniho fragmentu polozky mft_seznam[ret]->item - UID noveho adresare
+        // tvorba nove slozky na prvni volne misto
         make_new_file(ret, nazev);
-
     }
 
 
@@ -565,7 +562,6 @@ void in_copy(){
     scanf("%255s",path1);
     scanf("%255s",path2);
 
-
 	// soubor k presunu z pocitace
 	strncpy(pc_file, path1, strlen(path1));
 	pc_file[strlen(path1)] = '\0';
@@ -654,7 +650,7 @@ void defragmentation(){
     int nova_bitmapa[CLUSTER_COUNT];
     FILE *fw;
 
-    // zaloh ntfs
+    // zaloha fs
     char *old = (char *) malloc(100);
     char *new = (char *) malloc(100);
     strcpy(new, ntfs_file);
@@ -681,7 +677,7 @@ void defragmentation(){
                 char *cely_soubor = get_file_content(i);
                 strcpy(ntfs_file, old);
 
-//               clusteru = ceil((double) strlen(cely_soubor) / CLUSTER_SIZE);
+               clusteru = ceil((double) strlen(cely_soubor) / CLUSTER_SIZE);
 
                 // zapis do bitmapy
                 for (j = zpracovany; j < zpracovany + clusteru; j++) {

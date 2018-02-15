@@ -316,7 +316,7 @@ char* read_file_from_pc(char *pc_soubor){
     char *ret;
     fr = fopen(pc_soubor, "r");
     if (fr != NULL){
-        // zjistim si delku souboru
+        // zjisteni delky souboru
         fseek(fr, 0, SEEK_END);
         size = ftell(fr);
 
@@ -483,7 +483,7 @@ void *check_consist(void *arg) {
         if (mft_seznam[ke_zpracovani] != NULL){
             mft_itemy = mft_seznam[ke_zpracovani];
 
-            // iteruce mfti
+            // iterace mfti
             while (mft_itemy != NULL){
                 mfti = mft_itemy->item;
 
