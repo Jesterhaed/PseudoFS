@@ -677,7 +677,7 @@ void defragmentation(){
                 char *cely_soubor = get_file_content(i);
                 strcpy(ntfs_file, old);
 
-               clusteru = ceil((double) strlen(cely_soubor) / CLUSTER_SIZE);
+                clusteru = ceil((double) strlen(cely_soubor) / CLUSTER_SIZE);
 
                 // zapis do bitmapy
                 for (j = zpracovany; j < zpracovany + clusteru; j++) {
